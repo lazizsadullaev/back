@@ -1,9 +1,9 @@
+{% extends 'base.html' %}
+    {% block article_ditail %}
 
 
-<div class="row container">
-  <div class="d-flex flex-wrap gap-5 " >
-    {% for article in articles %}
-    <div class="card" style="width: 18rem;">
+
+     <div class="card col-10">
       {% if article.photo %}
   <img src="{{ article.photo.url }}" class="card-img-top" alt="{{ article.title }}" style="height: 250px">
       {% endif %}
@@ -26,12 +26,10 @@
     </li>
   </ul>
   <div class="card-body">
-    <a href="{% url 'article_ditail' article_id=article.pk %} " class="card-link">
+    <a href="" class="card-link">
       <b>Подробнее</b>
     </a>
 
   </div>
 </div>
-    {% endfor %}
-  </div>
-</div>
+   {% endblock article_ditail %}
