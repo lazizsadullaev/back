@@ -35,5 +35,8 @@ def article_ditail(request, article_id):
     return render(request, "web_site/article_ditail.html", context)
 
 
+def registration(request):
+    return render(request, 'web_site/registration.html')
 
-
+def login(request):
+    return render(request, 'web_site/login.html')
