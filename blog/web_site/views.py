@@ -1,7 +1,9 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from .models import Article, Category
 
 from django.core.paginator import Paginator
+from django.contrib.auth import login,logout,authenticate
+from .forms import RegistrationForm, LoginForm
 # Create your views here.
 
 def home_view(request):
@@ -36,7 +38,36 @@ def article_ditail(request, article_id):
 
 
 def registration(request):
-    return render(request, 'web_site/registration.html')
+    if request.method == "POST":
+        form = RegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = RegistrationForm()
+    context = {
+        "form": form
+    }
+    return render(request, 'web_site/registration.html', context)
 
-def login(request):
-    return render(request, 'web_site/login.html')
+def llogin(request):
+    if request.method == "POST":
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = LoginForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'web_site/login.html', context)
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('home')
